@@ -1,5 +1,8 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vulkann - Minecraft Anticheat Solution</title>
     <style>
       * {
@@ -7,12 +10,53 @@
         padding: 0;
         box-sizing: border-box;
       }
+
       body {
         min-height: 100vh;
         background: linear-gradient(135deg, #1a0033 0%, #7b2fff 100%);
+        font-family: sans-serif;
+      }
+
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 12px 24px;
+        display: flex;
+        align-items: center;
+      }
+
+      .logo-wrap {
+        display: flex;
+        align-items: center;
+      }
+
+      .logo-wrap img {
+        height: clamp(36px, 6vw, 64px);
+        width: auto;
+        object-fit: contain;
+        display: block;
+        /* Crop right ~40% so only the left portion shows */
+        object-position: left center;
+        max-width: clamp(80px, 14vw, 160px);
+        overflow: hidden;
+      }
+
+      main {
+        padding-top: clamp(80px, 12vw, 120px);
       }
     </style>
   </head>
   <body>
+    <header>
+      <div class="logo-wrap">
+        <img src="vulkannlogo.png" alt="Vulkann" />
+      </div>
+    </header>
+
+    <main>
+    </main>
   </body>
 </html>
