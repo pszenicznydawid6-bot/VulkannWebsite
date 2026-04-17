@@ -1,6 +1,7 @@
 {
   "hosting": {
-    "public": "public", 
+    "site": "Vulkann",
+    "public": "public",
     "ignore": [
       "firebase.json",
       "**/.*",
