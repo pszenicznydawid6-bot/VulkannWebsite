@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "login": "firebase login --no-localhost",
+    "deploy": "firebase deploy --only hosting --project vulkann"
+  },
+  "devDependencies": {
+    "firebase-tools": "^15.15.0"
+  }
+}
