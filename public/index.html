@@ -8,648 +8,178 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
     <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
+      /* --- CORE STYLES --- */
+      * { margin: 0; padding: 0; box-sizing: border-box; }
       body {
         min-height: 100vh;
         background: linear-gradient(160deg, #0d0d0d 0%, #1a1a2e 50%, #16213e 100%);
         font-family: 'Inter', sans-serif;
         color: #e0e0e0;
+        line-height: 1.6;
       }
 
-      /* Warning bar */
       .warning-bar {
         background: #f59e0b;
         color: #1a1100;
         padding: 10px 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        font-size: 0.875rem;
-        font-weight: 600;
         text-align: center;
+        font-size: 0.875rem;
+        font-weight: 700;
         position: fixed;
         top: 0;
-        left: 0;
-        right: 0;
+        width: 100%;
         z-index: 200;
       }
 
-      .warning-bar svg {
-        flex-shrink: 0;
-        width: 18px;
-        height: 18px;
-      }
-
-      /* Header */
       header {
         position: fixed;
-        top: 40px;
-        left: 0;
-        right: 0;
+        top: 40px; 
+        width: 100%;
         z-index: 100;
-        padding: 12px 32px;
+        padding: 15px 32px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        background: rgba(10, 10, 20, 0.7);
+        background: rgba(10, 10, 20, 0.85);
         backdrop-filter: blur(12px);
         border-bottom: 1px solid rgba(255,255,255,0.06);
       }
 
-      .logo-wrap {
-        display: flex;
-        align-items: center;
-      }
+      .logo-wrap img { height: 40px; }
 
-      .logo-wrap img {
-        height: clamp(36px, 5vw, 54px);
-        width: auto;
-        object-fit: contain;
-        display: block;
-        object-position: left center;
-        max-width: clamp(80px, 14vw, 160px);
-        overflow: hidden;
-      }
+      .header-spacer { height: 160px; }
 
-      /* Language selector */
-      .lang-wrap {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .lang-wrap label {
-        font-size: 0.8rem;
-        color: #aaa;
-        white-space: nowrap;
-      }
-
-      #lang-select {
-        background: rgba(255,255,255,0.08);
-        border: 1px solid rgba(255,255,255,0.15);
-        color: #e0e0e0;
-        padding: 6px 10px;
-        border-radius: 6px;
-        font-size: 0.8rem;
-        cursor: pointer;
-        outline: none;
-        transition: border-color 0.2s;
-      }
-
-      #lang-select:hover {
-        border-color: rgba(255,255,255,0.35);
-      }
-
-      /* Spacer */
-      main {
-        padding-top: calc(40px + clamp(64px, 10vw, 90px) + 40px);
-      }
-
-      /* Hero */
-      .hero {
-        max-width: 860px;
-        margin: 0 auto;
-        padding: 80px 24px 60px;
+      /* --- NEWSLETTER (FORMSPREE) --- */
+      .optin-section {
+        background: rgba(245, 158, 11, 0.05);
+        border: 1px solid rgba(245, 158, 11, 0.2);
+        border-radius: 16px;
+        padding: 40px;
+        margin: 40px auto;
+        max-width: 600px;
         text-align: center;
       }
-
-      .hero-badge {
-        display: inline-block;
-        background: rgba(239,68,68,0.15);
-        border: 1px solid rgba(239,68,68,0.35);
-        color: #f87171;
-        font-size: 0.75rem;
-        font-weight: 600;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
-        padding: 5px 14px;
-        border-radius: 999px;
-        margin-bottom: 24px;
+      .optin-form { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+      .optin-input {
+        padding: 14px;
+        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,0.1);
+        background: rgba(0,0,0,0.3);
+        color: #fff;
+        font-size: 1rem;
       }
-
-      .hero h1 {
-        font-size: clamp(2rem, 6vw, 3.5rem);
+      .optin-btn {
+        background: #f59e0b;
+        color: #000;
+        border: none;
+        padding: 14px;
+        border-radius: 8px;
         font-weight: 700;
-        line-height: 1.15;
-        color: #ffffff;
-        margin-bottom: 20px;
+        cursor: pointer;
+        font-size: 1rem;
       }
 
-      .hero h1 span {
-        color: #f59e0b;
-      }
-
-      .hero p {
-        font-size: clamp(1rem, 2.5vw, 1.2rem);
-        line-height: 1.7;
-        color: #b0b0c0;
-        max-width: 640px;
-        margin: 0 auto 40px;
-      }
-
-      .hero-stat {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: rgba(245,158,11,0.12);
-        border: 1px solid rgba(245,158,11,0.3);
-        border-radius: 12px;
-        padding: 14px 28px;
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: #fbbf24;
-      }
-
-      /* Section */
-      .section {
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 60px 24px;
-      }
-
-      .section-title {
-        font-size: clamp(1.4rem, 3vw, 2rem);
-        font-weight: 700;
-        color: #ffffff;
-        margin-bottom: 8px;
-      }
-
-      .section-sub {
-        color: #888;
-        font-size: 0.95rem;
-        margin-bottom: 40px;
-      }
-
-      /* Cheat grid */
+      /* --- CHEAT GRID --- */
       .cheat-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        gap: 16px;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 15px;
+        margin-top: 30px;
       }
-
       .cheat-card {
-        background: rgba(255,255,255,0.04);
+        background: rgba(255,255,255,0.03);
         border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 12px;
-        padding: 20px 16px;
+        border-radius: 10px;
+        padding: 15px;
         display: flex;
         align-items: center;
-        gap: 12px;
-        transition: background 0.2s, border-color 0.2s, transform 0.2s;
+        gap: 10px;
       }
+      .cheat-dot { width: 8px; height: 8px; background: #22c55e; border-radius: 50%; box-shadow: 0 0 8px #22c55e; }
 
-      .cheat-card:hover {
-        background: rgba(255,255,255,0.08);
-        border-color: rgba(245,158,11,0.3);
-        transform: translateY(-2px);
-      }
-
-      .cheat-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #22c55e;
-        flex-shrink: 0;
-        box-shadow: 0 0 6px rgba(34,197,94,0.6);
-      }
-
-      .cheat-name {
-        font-size: 0.95rem;
-        font-weight: 600;
-        color: #e0e0e0;
-      }
-
-      /* About strip */
-      .about-strip {
-        background: rgba(255,255,255,0.03);
-        border-top: 1px solid rgba(255,255,255,0.07);
-        border-bottom: 1px solid rgba(255,255,255,0.07);
-        padding: 60px 24px;
-      }
-
-      .about-inner {
-        max-width: 760px;
-        margin: 0 auto;
-        text-align: center;
-      }
-
-      .about-inner h2 {
-        font-size: clamp(1.4rem, 3vw, 2rem);
-        font-weight: 700;
-        color: #fff;
-        margin-bottom: 16px;
-      }
-
-      .about-inner p {
-        font-size: 1rem;
-        line-height: 1.8;
-        color: #a0a0b0;
-      }
-
-      /* Footer */
-      footer {
-        text-align: center;
-        padding: 40px 24px;
-        font-size: 0.8rem;
-        color: #555;
-      }
-
-      /* Divider */
-      .divider {
-        height: 1px;
-        background: rgba(255,255,255,0.07);
-        max-width: 1000px;
-        margin: 0 auto;
-      }
+      /* Google Translate Tweak */
+      #google_translate_element { background: white; border-radius: 4px; padding: 2px; }
     </style>
   </head>
   <body>
 
-    <!-- Warning bar -->
-    <div class="warning-bar" id="warning-bar">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
-        <line x1="12" y1="9" x2="12" y2="13"/>
-        <line x1="12" y1="17" x2="12.01" y2="17"/>
-      </svg>
-      <span id="warning-text">Vulkann is still in active development and not yet publicly released. Check back regularly for updates on its launch.</span>
+    <div class="warning-bar">
+      Vulkann is in active development. Stay tuned for the public release.
     </div>
 
-    <!-- Header (space for navbar later) -->
     <header>
       <div class="logo-wrap">
         <img src="https://raw.githubusercontent.com/pszenicznydawid6-bot/VulkannWebsite/refs/heads/main/vulkannlogo.png" alt="Vulkann" />
       </div>
-      <div class="lang-wrap">
-        <label for="lang-select">&#127760; Language</label>
-        <select id="lang-select">
-          <option value="en">English</option>
-          <option value="pl">Polski</option>
-          <option value="de">Deutsch</option>
-          <option value="fr">Français</option>
-          <option value="es">Español</option>
-          <option value="pt">Português</option>
-          <option value="ru">Русский</option>
-          <option value="zh-CN">中文 (简体)</option>
-          <option value="ja">日本語</option>
-          <option value="ko">한국어</option>
-          <option value="nl">Nederlands</option>
-          <option value="it">Italiano</option>
-          <option value="tr">Türkçe</option>
-          <option value="sv">Svenska</option>
-          <option value="cs">Čeština</option>
-          <option value="uk">Українська</option>
-        </select>
-      </div>
+      <div id="google_translate_element"></div>
     </header>
 
+    <div class="header-spacer"></div>
+
     <main>
-
-      <!-- Hero -->
-      <section class="hero">
-        <div class="hero-badge">Solo Dev Project</div>
-        <h1>The Anti-Cheat Built for <span>Bukkit &amp; Spigot</span></h1>
-        <p>Vulkann is a solo dev-made anti-cheat for Bukkit/Spigot Minecraft servers. Lightweight, precise, and built from the ground up to keep your server clean without the bloat.</p>
-        <div class="hero-stat">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-          </svg>
-          Detects 99% of known cheats
-        </div>
+      <section style="text-align:center; padding: 0 20px;">
+        <p style="color:#f87171; font-weight:bold; letter-spacing: 1px;">SOLO DEVELOPER PROJECT</p>
+        <h1 style="font-size: clamp(2.5rem, 8vw, 4rem); margin: 20px 0; line-height: 1.1;">
+          Advanced Anti-Cheat for Modern Servers
+        </h1>
+        <p style="max-width:750px; margin: 0 auto 40px; color:#b0b0c0; font-size: 1.2rem;">
+          Vulkann provides lightweight, high-precision detection for Bukkit and Spigot. Built to stop the most advanced hacked clients while maintaining perfect server performance.
+        </p>
       </section>
 
-      <div class="divider"></div>
+      <section class="optin-section">
+        <h2>Get Notified on Launch</h2>
+        <p>Drop your email below and I will send you a single message when Vulkann is ready for download.</p>
+        
+        <form action="https://formspree.io/f/xojydeal" method="POST" class="optin-form">
+          <input type="email" name="email" class="optin-input" placeholder="Enter your email address" required>
+          <button type="submit" class="optin-btn">Notify Me</button>
+        </form>
+      </section>
 
-      <!-- About -->
-      <div class="about-strip">
-        <div class="about-inner">
-          <h2>What is Vulkann?</h2>
-          <p>
-            Vulkann is an independent anti-cheat plugin for Minecraft servers running Bukkit or Spigot. Developed entirely by a single developer, it focuses on accuracy, low false-positive rates, and performance efficiency. Whether you run a small survival server or a competitive PvP network, Vulkann aims to detect and stop cheaters before they ruin the experience for others.
-          </p>
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <!-- Cheat detection -->
-      <section class="section">
-        <h2 class="section-title">What Vulkann Detects</h2>
-        <p class="section-sub">A broad and growing list of cheat modules — all caught in real time.</p>
+      <section style="max-width: 1100px; margin: 80px auto; padding: 0 24px;">
+        <h2 style="text-align:center; margin-bottom: 10px;">Modules & Detections</h2>
+        <p style="text-align:center; color:#888; margin-bottom: 40px;">Real-time analysis for 50+ cheat types</p>
+        
         <div class="cheat-grid">
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">Flight</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">Criticals</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">KillAura</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">Speed</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">NoFall</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">Reach</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">AutoClicker</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">Bhop</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">Timer</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">Aimbot</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">AntiKnockback</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">NoSlow</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">Scaffold</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">Jesus</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">Velocity</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">Step</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">Strafe</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">FastPlace</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">Phase</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">ElytraFlight</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">HeadRoll</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">BadPackets</span></div>
-          <div class="cheat-card"><div class="cheat-dot"></div><span class="cheat-name">MoreToSoon...</span></div>
+          <div class="cheat-card"><div class="cheat-dot"></div>KillAura</div>
+          <div class="cheat-card"><div class="cheat-dot"></div>MultiAura</div>
+          <div class="cheat-card"><div class="cheat-dot"></div>Reach (3.01+)</div>
+          <div class="cheat-card"><div class="cheat-dot"></div>AutoClicker</div>
+          <div class="cheat-card"><div class="cheat-dot"></div>Velocity</div>
+          <div class="cheat-card"><div class="cheat-dot"></div>Criticals</div>
+          <div class="cheat-card"><div class="cheat-dot"></div>AutoBow</div>
+          <div class="cheat-card"><div class="cheat-dot"></div>Fly / Hover</div>
+          <div class="cheat-card"><div class="cheat-dot"></div>InfiniteBhop</div>
+          <div class="cheat-card"><div class="cheat-dot"></div>Step / Spider</div>
+          <div class="cheat-card"><div class="cheat-dot"></div>Jesus / WaterWalk</div>
+          <div class="cheat-card"><div class="cheat-dot"></div>NoSlowdown</div>
+          <div class="cheat-card"><div class="cheat-dot"></div>Blink</div>
+          <div class="cheat-card"><div class="cheat-dot"></div>Timer (2x-5x)</div>
+          <div class="cheat-card"><div class="cheat-dot"></div>FastLadder</div>
+          <div class="cheat-card"><div class="cheat-dot"></div>ScaffoldWalk</div>
+          <div class="cheat-card"><div class="cheat-dot"></div>FastPlace</div>
+          <div class="cheat-card"><div class="cheat-dot"></div>Nuker / Breaker</div>
+          <div class="cheat-card"><div class="cheat-dot"></div>GhostHand</div>
+          <div class="cheat-card"><div class="cheat-dot"></div>BadPackets</div>
+          <div class="cheat-card"><div class="cheat-dot"></div>More coming...</div>
         </div>
       </section>
-
     </main>
 
-    <footer>
-      <p id="footer-text">&copy; 2026 Vulkann. All rights reserved. Built by a solo developer.</p>
+    <footer style="padding: 60px 20px; text-align: center; color: #555; border-top: 1px solid rgba(255,255,255,0.05);">
+      &copy; 2026 Vulkann Anticheat. Built by a solo developer.
     </footer>
 
-    <script>
-      const translations = {
-        warning: {
-          en: "Vulkann is still in active development and not yet publicly released. Check back regularly for updates on its launch.",
-          pl: "Vulkann jest wciąż w aktywnym rozwoju i nie został jeszcze publicznie wydany. Sprawdzaj regularnie, aby dowiedzieć się o jego premierze.",
-          de: "Vulkann befindet sich noch in aktiver Entwicklung und wurde noch nicht öffentlich veröffentlicht. Schauen Sie regelmäßig vorbei, um über den Launch informiert zu bleiben.",
-          fr: "Vulkann est toujours en développement actif et n'a pas encore été publié. Revenez régulièrement pour suivre les mises à jour de son lancement.",
-          es: "Vulkann todavía está en desarrollo activo y aún no ha sido lanzado públicamente. Vuelve regularmente para conocer las actualizaciones sobre su lanzamiento.",
-          pt: "Vulkann ainda está em desenvolvimento ativo e ainda não foi lançado publicamente. Volte regularmente para acompanhar as atualizações do seu lançamento.",
-          ru: "Vulkann всё ещё находится в активной разработке и ещё не был публично выпущен. Проверяйте сайт регулярно, чтобы узнать о его запуске.",
-          "zh-CN": "Vulkann 仍在积极开发中，尚未公开发布。请定期查看以获取发布更新。",
-          ja: "Vulkann はまだ開発中で、公開されていません。定期的にチェックして、リリース情報をご確認ください。",
-          ko: "Vulkann은 아직 개발 중이며 공개적으로 출시되지 않았습니다. 출시 업데이트를 위해 정기적으로 확인하세요.",
-          nl: "Vulkann is nog in actieve ontwikkeling en nog niet publiek uitgebracht. Kom regelmatig terug voor updates over de lancering.",
-          it: "Vulkann è ancora in sviluppo attivo e non è ancora stato rilasciato pubblicamente. Torna regolarmente per aggiornamenti sul suo lancio.",
-          tr: "Vulkann hâlâ aktif geliştirme aşamasındadır ve henüz kamuoyuna sunulmamıştır. Lansmana ilişkin güncellemeler için düzenli olarak kontrol edin.",
-          sv: "Vulkann är fortfarande under aktiv utveckling och har ännu inte släppts offentligt. Kom tillbaka regelbundet för uppdateringar om lanseringen.",
-          cs: "Vulkann je stále v aktivním vývoji a zatím nebyl veřejně vydán. Pravidelně se vracejte pro aktualizace o jeho vydání.",
-          uk: "Vulkann ще знаходиться в активній розробці та ще не був публічно випущений. Регулярно перевіряйте для отримання оновлень щодо запуску.",
-        },
-        footer: {
-          en: "© 2026 Vulkann. All rights reserved. Built by a solo developer.",
-          pl: "© 2026 Vulkann. Wszelkie prawa zastrzeżone. Stworzone przez jednego dewelopera.",
-          de: "© 2026 Vulkann. Alle Rechte vorbehalten. Von einem einzelnen Entwickler erstellt.",
-          fr: "© 2026 Vulkann. Tous droits réservés. Créé par un développeur solo.",
-          es: "© 2026 Vulkann. Todos los derechos reservados. Desarrollado por un solo desarrollador.",
-          pt: "© 2026 Vulkann. Todos os direitos reservados. Feito por um único desenvolvedor.",
-          ru: "© 2026 Vulkann. Все права защищены. Разработано одним разработчиком.",
-          "zh-CN": "© 2026 Vulkann. 保留所有权利。由独立开发者构建。",
-          ja: "© 2026 Vulkann. All rights reserved. ひとりの開発者によって作られました。",
-          ko: "© 2026 Vulkann. 모든 권리 보유. 단독 개발자가 제작.",
-          nl: "© 2026 Vulkann. Alle rechten voorbehouden. Gemaakt door een solo-ontwikkelaar.",
-          it: "© 2026 Vulkann. Tutti i diritti riservati. Creato da uno sviluppatore indipendente.",
-          tr: "© 2026 Vulkann. Tüm hakları saklıdır. Tek bir geliştirici tarafından yapılmıştır.",
-          sv: "© 2026 Vulkann. Alla rättigheter förbehållna. Byggt av en ensam utvecklare.",
-          cs: "© 2026 Vulkann. Všechna práva vyhrazena. Vytvořeno jediným vývojářem.",
-          uk: "© 2026 Vulkann. Усі права захищені. Створено одним розробником.",
-        }
-      };
-
-      const pageElements = {
-        badge: { selector: '.hero-badge', key: 'badge' },
-        h1line1: { selector: null },
-        heroParagraph: { selector: '.hero p', key: 'heroParagraph' },
-        heroStat: { selector: '.hero-stat', key: 'heroStat' },
-        aboutTitle: { selector: '.about-inner h2', key: 'aboutTitle' },
-        aboutText: { selector: '.about-inner p', key: 'aboutText' },
-        sectionTitle: { selector: '.section-title', key: 'sectionTitle' },
-        sectionSub: { selector: '.section-sub', key: 'sectionSub' },
-        langLabel: { selector: '.lang-wrap label', key: 'langLabel' },
-      };
-
-      const fullTranslations = {
-        en: {
-          badge: "Solo Dev Project",
-          heroParagraph: "Vulkann is a solo dev-made anti-cheat for Bukkit/Spigot Minecraft servers. Lightweight, precise, and built from the ground up to keep your server clean without the bloat.",
-          heroStat: "Detects 99% of known cheats",
-          aboutTitle: "What is Vulkann?",
-          aboutText: "Vulkann is an independent anti-cheat plugin for Minecraft servers running Bukkit or Spigot. Developed entirely by a single developer, it focuses on accuracy, low false-positive rates, and performance efficiency. Whether you run a small survival server or a competitive PvP network, Vulkann aims to detect and stop cheaters before they ruin the experience for others.",
-          sectionTitle: "What Vulkann Detects",
-          sectionSub: "A broad and growing list of cheat modules — all caught in real time.",
-          langLabel: "🌐 Language",
-          warning: translations.warning.en,
-          footer: translations.footer.en,
-        },
-        pl: {
-          badge: "Projekt Solo Deva",
-          heroParagraph: "Vulkann to anti-cheat stworzony przez jednego dewelopera dla serwerów Minecraft Bukkit/Spigot. Lekki, precyzyjny i zbudowany od podstaw, aby utrzymać serwer w czystości.",
-          heroStat: "Wykrywa 99% znanych cheatów",
-          aboutTitle: "Czym jest Vulkann?",
-          aboutText: "Vulkann to niezależna wtyczka anti-cheat dla serwerów Minecraft z Bukkit lub Spigot. Rozwinięty w całości przez jednego dewelopera, skupia się na dokładności, niskim wskaźniku fałszywych alarmów i wydajności. Niezależnie od tego, czy prowadzisz mały serwer survivalowy czy sieć PvP, Vulkann ma na celu wykrycie i zatrzymanie oszustów.",
-          sectionTitle: "Co wykrywa Vulkann",
-          sectionSub: "Szeroka i rosnąca lista modułów cheatów — wykrywanych w czasie rzeczywistym.",
-          langLabel: "🌐 Język",
-          warning: translations.warning.pl,
-          footer: translations.footer.pl,
-        },
-        de: {
-          badge: "Solo-Entwickler-Projekt",
-          heroParagraph: "Vulkann ist ein von einem einzigen Entwickler erstelltes Anti-Cheat-Plugin für Bukkit/Spigot-Minecraft-Server. Leichtgewichtig, präzise und von Grund auf neu entwickelt.",
-          heroStat: "Erkennt 99% der bekannten Cheats",
-          aboutTitle: "Was ist Vulkann?",
-          aboutText: "Vulkann ist ein unabhängiges Anti-Cheat-Plugin für Minecraft-Server mit Bukkit oder Spigot. Vollständig von einem einzelnen Entwickler entwickelt, liegt der Fokus auf Genauigkeit, geringen Falschpositivraten und Leistungseffizienz.",
-          sectionTitle: "Was Vulkann erkennt",
-          sectionSub: "Eine breite und wachsende Liste von Cheat-Modulen — alle in Echtzeit erkannt.",
-          langLabel: "🌐 Sprache",
-          warning: translations.warning.de,
-          footer: translations.footer.de,
-        },
-        fr: {
-          badge: "Projet Solo Dev",
-          heroParagraph: "Vulkann est un anti-cheat conçu par un seul développeur pour les serveurs Minecraft Bukkit/Spigot. Léger, précis et construit de zéro pour garder votre serveur propre.",
-          heroStat: "Détecte 99% des cheats connus",
-          aboutTitle: "Qu'est-ce que Vulkann ?",
-          aboutText: "Vulkann est un plugin anti-cheat indépendant pour les serveurs Minecraft fonctionnant sur Bukkit ou Spigot. Entièrement développé par un seul développeur, il se concentre sur la précision, les faibles taux de faux positifs et l'efficacité des performances.",
-          sectionTitle: "Ce que Vulkann détecte",
-          sectionSub: "Une liste large et croissante de modules de triche — tous détectés en temps réel.",
-          langLabel: "🌐 Langue",
-          warning: translations.warning.fr,
-          footer: translations.footer.fr,
-        },
-        es: {
-          badge: "Proyecto de Desarrollador Solo",
-          heroParagraph: "Vulkann es un anti-cheat creado por un único desarrollador para servidores Minecraft Bukkit/Spigot. Ligero, preciso y construido desde cero para mantener tu servidor limpio.",
-          heroStat: "Detecta el 99% de los cheats conocidos",
-          aboutTitle: "¿Qué es Vulkann?",
-          aboutText: "Vulkann es un plugin anti-cheat independiente para servidores Minecraft con Bukkit o Spigot. Desarrollado completamente por un único desarrollador, se enfoca en la precisión, bajas tasas de falsos positivos y eficiencia de rendimiento.",
-          sectionTitle: "Qué detecta Vulkann",
-          sectionSub: "Una lista amplia y creciente de módulos de trampas — todos detectados en tiempo real.",
-          langLabel: "🌐 Idioma",
-          warning: translations.warning.es,
-          footer: translations.footer.es,
-        },
-        pt: {
-          badge: "Projeto de Dev Solo",
-          heroParagraph: "Vulkann é um anti-cheat criado por um único desenvolvedor para servidores Minecraft Bukkit/Spigot. Leve, preciso e construído do zero para manter seu servidor limpo.",
-          heroStat: "Detecta 99% dos cheats conhecidos",
-          aboutTitle: "O que é Vulkann?",
-          aboutText: "Vulkann é um plugin anti-cheat independente para servidores Minecraft com Bukkit ou Spigot. Desenvolvido inteiramente por um único desenvolvedor, foca em precisão, baixas taxas de falsos positivos e eficiência de desempenho.",
-          sectionTitle: "O que Vulkann Detecta",
-          sectionSub: "Uma lista ampla e crescente de módulos de trapaça — todos detectados em tempo real.",
-          langLabel: "🌐 Idioma",
-          warning: translations.warning.pt,
-          footer: translations.footer.pt,
-        },
-        ru: {
-          badge: "Проект одного разработчика",
-          heroParagraph: "Vulkann — античит, созданный одним разработчиком для серверов Minecraft Bukkit/Spigot. Лёгкий, точный и построенный с нуля для чистоты вашего сервера.",
-          heroStat: "Обнаруживает 99% известных читов",
-          aboutTitle: "Что такое Vulkann?",
-          aboutText: "Vulkann — независимый античит-плагин для серверов Minecraft на Bukkit или Spigot. Разработан одним разработчиком с упором на точность, низкий уровень ложных срабатываний и эффективность производительности.",
-          sectionTitle: "Что обнаруживает Vulkann",
-          sectionSub: "Широкий и растущий список чит-модулей — все обнаруживаются в реальном времени.",
-          langLabel: "🌐 Язык",
-          warning: translations.warning.ru,
-          footer: translations.footer.ru,
-        },
-        "zh-CN": {
-          badge: "独立开发者项目",
-          heroParagraph: "Vulkann 是一款由单个开发者为 Bukkit/Spigot Minecraft 服务器制作的反作弊插件。轻量、精准，从零构建以保持服务器干净。",
-          heroStat: "检测 99% 的已知作弊",
-          aboutTitle: "什么是 Vulkann？",
-          aboutText: "Vulkann 是一款适用于运行 Bukkit 或 Spigot 的 Minecraft 服务器的独立反作弊插件。完全由单个开发者开发，专注于准确性、低误报率和性能效率。",
-          sectionTitle: "Vulkann 能检测什么",
-          sectionSub: "广泛且不断增长的作弊模块列表 — 全部实时检测。",
-          langLabel: "🌐 语言",
-          warning: translations.warning["zh-CN"],
-          footer: translations.footer["zh-CN"],
-        },
-        ja: {
-          badge: "ソロ開発プロジェクト",
-          heroParagraph: "Vulkann は Bukkit/Spigot Minecraft サーバー向けにひとりの開発者が作ったアンチチートです。軽量で正確、ゼロから構築されています。",
-          heroStat: "既知のチートの 99% を検出",
-          aboutTitle: "Vulkann とは？",
-          aboutText: "Vulkann は Bukkit または Spigot を使用した Minecraft サーバー向けの独立したアンチチートプラグインです。ひとりの開発者によって完全に開発され、精度、低誤検知率、パフォーマンス効率に重点を置いています。",
-          sectionTitle: "Vulkann が検出するもの",
-          sectionSub: "幅広く増え続けるチートモジュールリスト — すべてリアルタイムで検出。",
-          langLabel: "🌐 言語",
-          warning: translations.warning.ja,
-          footer: translations.footer.ja,
-        },
-        ko: {
-          badge: "솔로 개발 프로젝트",
-          heroParagraph: "Vulkann은 Bukkit/Spigot Minecraft 서버를 위해 혼자 만든 안티치트입니다. 가볍고 정확하며 처음부터 구축되었습니다.",
-          heroStat: "알려진 치트의 99% 감지",
-          aboutTitle: "Vulkann이란?",
-          aboutText: "Vulkann은 Bukkit 또는 Spigot을 실행하는 Minecraft 서버용 독립 안티치트 플러그인입니다. 단일 개발자가 완전히 개발했으며 정확성, 낮은 오탐률, 성능 효율성에 초점을 맞춥니다.",
-          sectionTitle: "Vulkann이 감지하는 것",
-          sectionSub: "광범위하고 계속 성장하는 치트 모듈 목록 — 모두 실시간으로 감지됩니다.",
-          langLabel: "🌐 언어",
-          warning: translations.warning.ko,
-          footer: translations.footer.ko,
-        },
-        nl: {
-          badge: "Solo Dev Project",
-          heroParagraph: "Vulkann is een anti-cheat gemaakt door één ontwikkelaar voor Bukkit/Spigot Minecraft-servers. Lichtgewicht, precies en gebouwd vanaf de grond.",
-          heroStat: "Detecteert 99% van bekende cheats",
-          aboutTitle: "Wat is Vulkann?",
-          aboutText: "Vulkann is een onafhankelijke anti-cheat plugin voor Minecraft-servers met Bukkit of Spigot. Volledig ontwikkeld door één ontwikkelaar, gericht op nauwkeurigheid, lage fout-positief rates en prestatie-efficiëntie.",
-          sectionTitle: "Wat Vulkann Detecteert",
-          sectionSub: "Een brede en groeiende lijst van cheat-modules — allemaal in realtime gevangen.",
-          langLabel: "🌐 Taal",
-          warning: translations.warning.nl,
-          footer: translations.footer.nl,
-        },
-        it: {
-          badge: "Progetto Solo Dev",
-          heroParagraph: "Vulkann è un anti-cheat creato da un singolo sviluppatore per server Minecraft Bukkit/Spigot. Leggero, preciso e costruito da zero per mantenere pulito il tuo server.",
-          heroStat: "Rileva il 99% dei cheat noti",
-          aboutTitle: "Cos'è Vulkann?",
-          aboutText: "Vulkann è un plugin anti-cheat indipendente per server Minecraft su Bukkit o Spigot. Sviluppato interamente da un singolo sviluppatore, si concentra sulla precisione, bassi tassi di falsi positivi ed efficienza delle prestazioni.",
-          sectionTitle: "Cosa Rileva Vulkann",
-          sectionSub: "Un elenco ampio e crescente di moduli cheat — tutti rilevati in tempo reale.",
-          langLabel: "🌐 Lingua",
-          warning: translations.warning.it,
-          footer: translations.footer.it,
-        },
-        tr: {
-          badge: "Solo Geliştirici Projesi",
-          heroParagraph: "Vulkann, Bukkit/Spigot Minecraft sunucuları için tek bir geliştirici tarafından yapılmış bir anti-cheat'tir. Hafif, hassas ve sıfırdan inşa edilmiştir.",
-          heroStat: "Bilinen hilelerin %99'unu tespit eder",
-          aboutTitle: "Vulkann Nedir?",
-          aboutText: "Vulkann, Bukkit veya Spigot çalıştıran Minecraft sunucuları için bağımsız bir anti-cheat eklentisidir. Tamamen tek bir geliştirici tarafından geliştirilmiş olup doğruluk, düşük yanlış pozitif oranları ve performans verimliliğine odaklanır.",
-          sectionTitle: "Vulkann Ne Tespit Eder",
-          sectionSub: "Geniş ve büyüyen bir hile modülü listesi — tümü gerçek zamanlı olarak yakalanır.",
-          langLabel: "🌐 Dil",
-          warning: translations.warning.tr,
-          footer: translations.footer.tr,
-        },
-        sv: {
-          badge: "Solo-utvecklarprojekt",
-          heroParagraph: "Vulkann är ett anti-fusk byggt av en ensam utvecklare för Bukkit/Spigot Minecraft-servrar. Lätt, precist och byggt från grunden.",
-          heroStat: "Upptäcker 99% av kända fusk",
-          aboutTitle: "Vad är Vulkann?",
-          aboutText: "Vulkann är ett oberoende anti-fusk-plugin för Minecraft-servrar med Bukkit eller Spigot. Helt utvecklat av en enda utvecklare, fokuserar det på noggrannhet, låga falsk-positiv-frekvenser och prestandaeffektivitet.",
-          sectionTitle: "Vad Vulkann Upptäcker",
-          sectionSub: "En bred och växande lista med fuskmoduler — alla fångade i realtid.",
-          langLabel: "🌐 Språk",
-          warning: translations.warning.sv,
-          footer: translations.footer.sv,
-        },
-        cs: {
-          badge: "Projekt solo vývojáře",
-          heroParagraph: "Vulkann je anti-cheat vytvořený jedním vývojářem pro Minecraft servery Bukkit/Spigot. Lehký, přesný a postavený od základu.",
-          heroStat: "Detekuje 99 % známých cheatů",
-          aboutTitle: "Co je Vulkann?",
-          aboutText: "Vulkann je nezávislý anti-cheat plugin pro Minecraft servery běžící na Bukkit nebo Spigot. Zcela vyvinutý jedním vývojářem, zaměřuje se na přesnost, nízkou míru falešných poplachů a výkonovou efektivitu.",
-          sectionTitle: "Co Vulkann Detekuje",
-          sectionSub: "Široký a rostoucí seznam cheat modulů — vše zachyceno v reálném čase.",
-          langLabel: "🌐 Jazyk",
-          warning: translations.warning.cs,
-          footer: translations.footer.cs,
-        },
-        uk: {
-          badge: "Проект одного розробника",
-          heroParagraph: "Vulkann — античит, створений одним розробником для серверів Minecraft Bukkit/Spigot. Легкий, точний і побудований з нуля для чистоти вашого сервера.",
-          heroStat: "Виявляє 99% відомих читів",
-          aboutTitle: "Що таке Vulkann?",
-          aboutText: "Vulkann — незалежний античит-плагін для серверів Minecraft на Bukkit або Spigot. Повністю розроблений одним розробником з акцентом на точність, низький рівень хибних спрацювань та ефективність продуктивності.",
-          sectionTitle: "Що виявляє Vulkann",
-          sectionSub: "Широкий і зростаючий список чіт-модулів — усі виявляються в режимі реального часу.",
-          langLabel: "🌐 Мова",
-          warning: translations.warning.uk,
-          footer: translations.footer.uk,
-        },
-      };
-
-      function applyLanguage(lang) {
-        const t = fullTranslations[lang] || fullTranslations.en;
-        document.querySelector('#warning-text').textContent = t.warning;
-        document.querySelector('.hero-badge').textContent = t.badge;
-        document.querySelector('.hero p').textContent = t.heroParagraph;
-        const statEl = document.querySelector('.hero-stat');
-        statEl.childNodes[statEl.childNodes.length - 1].textContent = t.heroStat;
-        document.querySelector('.about-inner h2').textContent = t.aboutTitle;
-        document.querySelector('.about-inner p').textContent = t.aboutText;
-        document.querySelector('.section-title').textContent = t.sectionTitle;
-        document.querySelector('.section-sub').textContent = t.sectionSub;
-        document.querySelector('.lang-wrap label').textContent = t.langLabel;
-        document.querySelector('#footer-text').textContent = t.footer;
-        document.documentElement.lang = lang;
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+          pageLanguage: 'en',
+          // Removed the "Simple" layout to ensure it works better with large text
+          includedLanguages: 'pl,de,fr,es,pt,ru,zh-CN,ja,ko,nl,it,tr,sv,cs,uk'
+        }, 'google_translate_element');
       }
-
-      document.getElementById('lang-select').addEventListener('change', function() {
-        applyLanguage(this.value);
-      });
-
-      const userLang = navigator.language ? navigator.language.split('-')[0] : 'en';
-      const supported = Object.keys(fullTranslations);
-      const initialLang = supported.includes(navigator.language) ? navigator.language : (supported.includes(userLang) ? userLang : 'en');
-      const select = document.getElementById('lang-select');
-      if (select.querySelector(`option[value="${initialLang}"]`)) {
-        select.value = initialLang;
-      }
-      applyLanguage(select.value);
     </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   </body>
 </html>
